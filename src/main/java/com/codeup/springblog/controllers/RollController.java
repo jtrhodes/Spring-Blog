@@ -19,7 +19,7 @@ public class RollController {
 
     @GetMapping("/roll-dice/{}")
     @ResponseBody
-    public List<Integer> diceRoller(){
+    public void diceRoller(){
         Dice all = new Dice();
         all.setD4((int) Math.floor(Math.random() *4 +1));
         all.setD6((int) Math.floor(Math.random() * 6 + 1));

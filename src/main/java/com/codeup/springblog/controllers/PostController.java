@@ -1,6 +1,8 @@
 package com.codeup.springblog.controllers;
 
+import com.codeup.springblog.repositories.PostRepository;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -8,7 +10,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class PostController {
+    private final PostRepository postsDao;
 
+    public PostController(PostRepository postDao) {
+        this.postsDao = postDao;
+    }
+//    @GetMapping("/posts")
+//    public String index(Model model) {
+//        model.addAttribute("posts", postDao.findAll());
+//        return "posts/index";
+//    }
     @GetMapping("/posts")
     @ResponseBody
     public String index() {
@@ -21,7 +32,7 @@ public class PostController {
         return "Here is the post " + id;
     }
 
-    @GetMapping("/posts/create")
+    @GetMapping("/posts/show")
     @ResponseBody
     public String create() {
         return "Here is the post create form...";
