@@ -1,12 +1,12 @@
 package com.codeup.springblog.controllers;
 
+import com.codeup.springblog.models.Post;
 import com.codeup.springblog.repositories.PostRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 public class PostController {
@@ -21,9 +21,29 @@ public class PostController {
 //        return "posts/index";
 //    }
     @GetMapping("/posts")
-    @ResponseBody
-    public String index() {
-        return "Here are all the posts...";
+
+    public String index(Model model) {
+        List<Post> posts = postsDao.findAll();
+        model.addAttribute("posts", posts);
+        return "posts/index";
+    }
+    @GetMapping("/posts/{id}/edit")
+    public String editView(@PathVariable long id, Model model){
+        model.addAttribute("post",postsDao.getById(id));
+        return "posts/edit";
+    }
+@PostMapping("/posts/{id}/edit")
+    public String updatPost(@PathVariable long id, @RequestParam String title,@RequestParam String body){
+        Post post = postsDao.getById(id);
+        post.setBody(title);
+        post.setTitle(body);
+        postsDao.save(post);
+        return "redirect:/posts";
+}
+    @PostMapping("/posts/{id}/delete")
+public String deletepost(@PathVariable long id){
+        postsDao.deleteById(id);
+        return "redirect:/posts";
     }
 
     @GetMapping("/posts/{id}")
