@@ -3,12 +3,15 @@
 
 <head th:replace="/partials.html :: head ('index')"></head>
 <body>
+<nav th:replace="/partials.html :: navbar"></nav>
 <div th:each="post : ${posts}">
     <h3 th:text="${post.title}"></h3>
     <p th:text="${post.body}"></p>
     <a th:href="@{'posts/' + ${post.id} + '/edit'}">Edit Post</a>
-    <form th:action="@{'posts/' + ${post.id} + '/delete'}" th:method="POST"></form>
+    <form th:action="@{'posts/' + ${post.id} + '/delete'}" th:method="POST">
+    <button>Delete</button>
+    </form>
 </div>
-<nav th:replace="/partials.html :: navbar"></nav>
+
 </body>
 </html>

@@ -1,8 +1,26 @@
+CREATE DATABASE springblog_db;
 use springblog_db;
 
 CREATE USER springblog_user@localhost IDENTIFIED BY 'password';
 GRANT ALL ON springblog_db.* TO springblog_user@localhost;
 truncate table posts;
+truncate table users;
+create table users (
+                       username VARCHAR(50),
+                       email VARCHAR(50),
+                       password VARCHAR(50)
+);
+insert into users (username, email, password) values ('bdarley0', 'bgillogley0@cbslocal.com', 'Q9XKZo5');
+insert into users (username, email, password) values ('sguichard1', 'cweigh1@unesco.org', 'cuVsIXCpunD');
+insert into users (username, email, password) values ('tstangoe2', 'hlempertz2@rakuten.co.jp', '5Yy8Cm6TLDX');
+insert into users (username, email, password) values ('bsweedy3', 'gsidary3@zimbio.com', 'Ko5MPjK');
+insert into users (username, email, password) values ('efrankowski4', 'mvevers4@ted.com', 'pWdCMBXs');
+insert into users (username, email, password) values ('aboerder5', 'rasher5@fda.gov', '6OcLH8n');
+insert into users (username, email, password) values ('bboness6', 'freinhardt6@washington.edu', 'i0MZL4MY43');
+insert into users (username, email, password) values ('tkincaid7', 'sleipelt7@army.mil', 'qZrsIEeA');
+insert into users (username, email, password) values ('dchristy8', 'kpratty8@un.org', 'AyRinXvXmKw');
+insert into users (username, email, password) values ('cplampeyn9', 'ipurvis9@ehow.com', 'PcC0axY');
+
 create table posts (
                        title VARCHAR(50),
                        body TEXT
@@ -124,7 +142,6 @@ insert into posts (title, body) values ('Marmota flaviventris', 'Sed sagittis. N
 
 Pellentesque at nulla. Suspendisse potenti. Cras in purus eu magna vulputate luctus.');
 # Rows:
-50
-​
+
 
 
