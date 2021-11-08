@@ -6,13 +6,13 @@
 </head>
 <body>
 <h1>Create Post</h1>
-<form th:method="POST">
+<form th:action="@{/posts/create}" th:method="POST" th:object="${post}">
     <div>
         <label for="title"></label>
-        <input name="title" id="title" type="text" placeholder="Enter your post">
+        <input th:field="*{title}" id="title" type="text" placeholder="Enter your post">
     </div>
     <div>
-        <textarea name="body" id="body" cols="30" rows="10" placeholder="Enter blog content"></textarea>
+        <textarea th:field="*{body}" id="body" cols="30" rows="10" placeholder="Enter blog content"></textarea>
     </div>
     <button>Submit</button>
 

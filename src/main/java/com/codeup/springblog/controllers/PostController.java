@@ -1,25 +1,25 @@
 package com.codeup.springblog.controllers;
 
 import com.codeup.springblog.models.Post;
-import com.codeup.springblog.models.PostImage;
 import com.codeup.springblog.models.User;
 import com.codeup.springblog.repositories.PostRepository;
 import com.codeup.springblog.repositories.UserRepository;
+import com.codeup.springblog.services.EmailService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 public class PostController {
     private final PostRepository postsDao;
     private final UserRepository usersDao;
-
-    public PostController(PostRepository postDao, UserRepository usersDao) {
+    private final EmailService emailService;
+    public PostController(PostRepository postDao, UserRepository usersDao, EmailService emailService) {
         this.postsDao = postDao;
         this.usersDao = usersDao;
+        this.emailService = emailService;
     }
 //    @GetMapping("/posts")
 //    public String index(Model model) {
@@ -38,11 +38,11 @@ public class PostController {
         return "posts/edit";
     }
 @PostMapping("/posts/{id}/edit")
-    public String updatePost(@PathVariable long id, @RequestParam String title,@RequestParam String body){
-        Post post = postsDao.getById(id);
-        post.setBody(title);
-        post.setTitle(body);
-        postsDao.save(post);
+    public String updatePost(@ModelAttribute Post post){
+        Post editedPost = postsDao.getById(post.getId());
+        editedPost.setTitle(post.getTitle());
+        editedPost.setBody(post.getBody());
+        postsDao.save(editedPost);
         return "redirect:/posts";
 }
     @PostMapping("/posts/{id}/delete")
@@ -58,18 +58,17 @@ public String deletepost(@PathVariable long id){
     }
 
     @GetMapping("/posts/create")
-    @ResponseBody
-    public String create(){
+    public String create(Model model){
+        model.addAttribute("post", new Post());
         return "posts/create";
     }
 
 
     @PostMapping("/posts/create")
-    @ResponseBody
-    public String create(@RequestParam String title, @RequestParam String body) {
+    public String create(@ModelAttribute Post post) {
         User user = usersDao.getById(1L); // just use the first user in the db
-        Post post= new Post(title, body);
         post.setUser(user);
+        emailService.prepareAndSend(post, "is this going to work", "yes it will");
         postsDao.save(post);
         return "redirect:/posts";
     }
