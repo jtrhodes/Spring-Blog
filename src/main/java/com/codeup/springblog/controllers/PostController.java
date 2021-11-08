@@ -67,7 +67,7 @@ public String deletepost(@PathVariable long id){
     @PostMapping("/posts/create")
     @ResponseBody
     public String create(@RequestParam String title, @RequestParam String body) {
-        User user = usersDao.getOne(1L); // just use the first user in the db
+        User user = usersDao.getById(1L); // just use the first user in the db
         Post post= new Post(title, body);
         post.setUser(user);
         postsDao.save(post);
