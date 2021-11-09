@@ -21,10 +21,6 @@ public class Post {
     public Post(){
 
     }
-    public Post(String title, String body, Long user_id){
-        this.title = title;
-        this.body = body;
-    }
     public Post(String title, String body){
         this.title = title;
         this.body = body;

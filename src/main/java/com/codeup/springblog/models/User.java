@@ -25,11 +25,10 @@ public class User {
         password = copy.password;
 
 }
-    public User(long id, String username, String email, List<Post> posts, String password) {
+    public User(long id, String username, String email, String password) {
         this.id = id;
         this.username = username;
         this.email = email;
-        this.posts = posts;
         this.password = password;
     }
 

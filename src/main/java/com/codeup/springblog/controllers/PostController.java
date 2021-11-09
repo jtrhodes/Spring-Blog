@@ -5,6 +5,7 @@ import com.codeup.springblog.models.User;
 import com.codeup.springblog.repositories.PostRepository;
 import com.codeup.springblog.repositories.UserRepository;
 import com.codeup.springblog.services.EmailService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -66,7 +67,7 @@ public String deletepost(@PathVariable long id){
 
     @PostMapping("/posts/create")
     public String create(@ModelAttribute Post post) {
-        User user = usersDao.getById(1L); // just use the first user in the db
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         post.setUser(user);
         emailService.prepareAndSend(post, "is this going to work", "yes it will");
         postsDao.save(post);

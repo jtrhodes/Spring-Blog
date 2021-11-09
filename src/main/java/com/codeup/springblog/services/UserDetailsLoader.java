@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class UserDetailsLoader implements UserDetailsService {
     private final UserRepository users;
 
-    public UserDetailsLoader(Users users) {
+    public UserDetailsLoader(UserRepository users) {
         this.users = users;
     }
 
