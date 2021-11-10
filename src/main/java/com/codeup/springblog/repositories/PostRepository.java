@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
+    Post findByTitle(String ad_to_be_deleted);
 //    @Query("from a where a.id like ?1")
 //    Post getAdById(long id);
 //

@@ -33,6 +33,9 @@ public class PostController {
         model.addAttribute("posts", posts);
         return "posts/index";
     }
+
+
+
     @GetMapping("/posts/{id}/edit")
     public String editView(@PathVariable long id, Model model){
         model.addAttribute("post",postsDao.getById(id));
@@ -53,9 +56,9 @@ public String deletepost(@PathVariable long id){
     }
 
     @GetMapping("/posts/{id}")
-    @ResponseBody
-    public String show(@PathVariable long id) {
-        return "Here is the post " + id;
+    public String show(@PathVariable long id, Model viewModel) {
+        viewModel.addAttribute("post", postsDao.getById(id));
+        return "posts/show";
     }
 
     @GetMapping("/posts/create")
@@ -68,7 +71,8 @@ public String deletepost(@PathVariable long id){
     @PostMapping("/posts/create")
     public String create(@ModelAttribute Post post) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        post.setUser(user);
+        User author = usersDao.getById(user.getId());
+        post.setUser(author);
         emailService.prepareAndSend(post, "is this going to work", "yes it will");
         postsDao.save(post);
         return "redirect:/posts";
