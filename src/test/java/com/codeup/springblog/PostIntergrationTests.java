@@ -106,13 +106,13 @@ public class PostIntergrationTests {
                 .andExpect(content().string(containsString("body")));
     }
     @Test
-    public void testDeleteAd() throws Exception {
+    public void testDeletePost() throws Exception {
         // Creates a test Ad to be deleted
         this.mvc.perform(
                         post("/posts/create").with(csrf())
                                 .session((MockHttpSession) session)
                                 .param("title", "ad to be deleted")
-                                .param("description", "won't last long"))
+                                .param("body", "won't last long"))
                 .andExpect(status().is3xxRedirection());
 
         // Get the recent Ad that matches the title
